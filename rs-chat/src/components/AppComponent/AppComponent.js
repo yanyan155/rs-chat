@@ -9,6 +9,8 @@ import './AppComponent.css';
 // https://blog.bitlabstudio.com/a-simple-chat-app-with-react-node-and-websocket-35d3c9835807
 // https://medium.com/practo-engineering/websockets-in-react-the-component-way-368730334eef
 
+//localStorage.clear();
+
 class AppComponent extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +26,12 @@ class AppComponent extends Component {
   UNSAFE_componentWillMount() {
     this.ws.onopen = () => {
       console.log('connected');
+      let messagesJSON = localStorage.getItem('messages');
+      if(messagesJSON) {
+        let messages = JSON.parse(messagesJSON);
+        messages.forEach(el => this.ws.send(JSON.stringify(el)));
+        localStorage.removeItem('messages');
+      }
     }
     this.ws.onmessage = evt => {
       const message = JSON.parse(evt.data);
@@ -31,12 +39,19 @@ class AppComponent extends Component {
     }
     this.ws.onclose = () => {
       console.log('disconnected');
-      window.location.reload(true);
+      // set timeout here
+      setTimeout(
+          function() {
+              window.location.reload(true);
+          }
+          ,8000
+      );
       /*this.setState({
         ws: new WebSocket("ws://st-chat.shas.tel")
       })*/
     }
   }
+
   getName = name => {
     localStorage.clear();
     localStorage.setItem('name', name);
@@ -54,7 +69,22 @@ class AppComponent extends Component {
 
   sendMessage = message => {
     const toSend = { from: this.state.name, message: message };
-    this.ws.send(JSON.stringify(toSend));
+
+    if(this.ws.readyState === 1) {
+      this.ws.send(JSON.stringify(toSend));
+    } else {
+      // save to local storage
+      //localStorage.setItem('name', name); JSON.parse(window.localStorage.getItem('user'));
+      let messagesJSON = localStorage.getItem('messages');
+      let messages;
+      if(messagesJSON) {
+        messages = JSON.parse(messagesJSON);
+      } else {
+        messages = [];
+      }
+      messages.push(toSend);
+      localStorage.setItem('messages', JSON.stringify(messages));
+    }
   }
 
   render() {
