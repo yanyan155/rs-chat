@@ -5,19 +5,12 @@ import MessageComponent from "../MessageComponent";
 import LoginComponent from "../LoginComponent";
 import './AppComponent.css';
 
-// get information from 
-// https://blog.bitlabstudio.com/a-simple-chat-app-with-react-node-and-websocket-35d3c9835807
-// https://medium.com/practo-engineering/websockets-in-react-the-component-way-368730334eef
-
-//localStorage.clear();
-
 class AppComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: localStorage.getItem('name') || null,
       messages: [],
-      //ws: new WebSocket("ws://st-chat.shas.tel")
     };
   }
 
@@ -39,16 +32,12 @@ class AppComponent extends Component {
     }
     this.ws.onclose = () => {
       console.log('disconnected');
-      // set timeout here
       setTimeout(
           function() {
               window.location.reload(true);
           }
           ,8000
       );
-      /*this.setState({
-        ws: new WebSocket("ws://st-chat.shas.tel")
-      })*/
     }
   }
 
@@ -73,8 +62,6 @@ class AppComponent extends Component {
     if(this.ws.readyState === 1) {
       this.ws.send(JSON.stringify(toSend));
     } else {
-      // save to local storage
-      //localStorage.setItem('name', name); JSON.parse(window.localStorage.getItem('user'));
       let messagesJSON = localStorage.getItem('messages');
       let messages;
       if(messagesJSON) {
