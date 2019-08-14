@@ -2,7 +2,7 @@
 
 const wsAPI = {
   init() {
-    var Socket = new WebSocket(" ws://st-chat.shas.tel ");
+    var Socket = new WebSocket(" ws://st-chat.shas.tel");
 
     Socket.onopen = function() {
       console.log("Соединение установлено.");
