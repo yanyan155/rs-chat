@@ -1,12 +1,20 @@
 import React from 'react';
 import './MessageComponent.css';
 
-const MessageComponent = () => {
+const MessageComponent = (props) => {
+
+  const findString = (event) => {
+    props.sendMessage(event.target.message.value);
+    event.target.message.value = '';
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   return (
-    <form>
+    <form  onSubmit={findString}>
 	  <div className="row">
 	    <div className="col">
-	      <input type="text" className="form-control" placeholder="Type message" />
+	      <input name="message" type="text" className="form-control" placeholder="Type message" />
 	    </div>
 	    <div className="col">
 	      <button type="submit" className="btn btn-primary">Send</button>

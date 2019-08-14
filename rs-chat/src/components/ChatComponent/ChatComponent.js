@@ -3,7 +3,6 @@ import ChatItemComponent from "../ChatItemComponent";
 import './ChatComponent.css';
 
 const ChatComponent = (props) => {
-    console.log(props);
     if(!props.list) {
         return (
             <div className="chat-wrap">
