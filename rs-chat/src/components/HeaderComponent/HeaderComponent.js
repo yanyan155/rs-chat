@@ -3,7 +3,7 @@ import './HeaderComponent.css';
 
 const HeaderComponent = () => {
   return (
-    <p>lala</p>
+    <div className="bg-primary pt-4 pb-4 pl-4">Chat</div>
   );
 }
 
