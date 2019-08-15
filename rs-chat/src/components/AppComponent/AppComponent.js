@@ -3,6 +3,7 @@ import HeaderComponent from "../HeaderComponent";
 import ChatComponent from "../ChatComponent";
 import MessageComponent from "../MessageComponent";
 import LoginComponent from "../LoginComponent";
+import notifyMe from "../notification";
 
 class AppComponent extends Component {
   constructor(props) {
@@ -28,6 +29,9 @@ class AppComponent extends Component {
     this.ws.onmessage = evt => {
       const message = JSON.parse(evt.data);
       this.addMessage(message);
+      if(document["webkitHidden"]) {
+        message.forEach(el => notifyMe(el));
+      }
     }
     this.ws.onclose = () => {
       console.log('disconnected');
