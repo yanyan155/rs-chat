@@ -3,7 +3,6 @@ import HeaderComponent from "../HeaderComponent";
 import ChatComponent from "../ChatComponent";
 import MessageComponent from "../MessageComponent";
 import LoginComponent from "../LoginComponent";
-import './AppComponent.css';
 
 class AppComponent extends Component {
   constructor(props) {

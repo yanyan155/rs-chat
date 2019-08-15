@@ -1,5 +1,4 @@
 import React from 'react';
-import './LoginComponent.css';
 
 const LoginComponent = (props) => {
 
