@@ -29,8 +29,9 @@ class AppComponent extends Component {
     this.ws.onmessage = evt => {
       const message = JSON.parse(evt.data);
       this.addMessage(message);
+      document.querySelector(".chat-wrap").scrollBy(0,50000);
       if(document["webkitHidden"]) {
-        message.forEach(el => notifyMe(el));
+        message.slice(-3).forEach(el => notifyMe(el));
       }
     }
     this.ws.onclose = () => {

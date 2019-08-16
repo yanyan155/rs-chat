@@ -8,7 +8,8 @@ const notifyMe = (message) => {
   }
   else if (Notification.permission !== 'denied') {
     Notification.requestPermission(function (permission) {
-      if (permission === "granted") {
+      if (permission === "granted" 
+          && typeof localStorage.getItem('name') === 'string') {
         var notification = new Notification(string);
       }
     });
